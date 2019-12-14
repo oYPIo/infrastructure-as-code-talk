@@ -21,7 +21,7 @@ variable "vpc_id" {
 
 variable "subnet_ids" {
   description = "The subnet IDs in which to deploy the EC2 Instances of the ECS Cluster."
-  type = "list"
+  type = list(string)
 }
 
 # ---------------------------------------------------------------------------------------------------------------------
@@ -31,7 +31,7 @@ variable "subnet_ids" {
 
 variable "allow_inbound_ports_and_cidr_blocks" {
   description = "A map of port to CIDR block. For each entry in this map, the ESC Cluster will allow incoming requests on the specified port from the specified CIDR blocks."
-  type = "map"
+  type = map(string)
   default = {}
 }
 
@@ -42,7 +42,7 @@ variable "key_pair_name" {
 
 variable "allow_ssh_from_cidr_blocks" {
   description = "The list of CIDR-formatted IP address ranges from which the EC2 Instances in the ECS Cluster should accept SSH connections."
-  type = "list"
+  type = list(string)
   default = []
 }
 

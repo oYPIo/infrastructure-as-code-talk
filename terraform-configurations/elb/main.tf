@@ -3,9 +3,9 @@
 # ---------------------------------------------------------------------------------------------------------------------
 
 resource "aws_elb" "elb" {
-  name = "${var.name}"
-  subnets = ["${var.subnet_ids}"]
-  security_groups = ["${aws_security_group.elb.id}"]
+  name = var.name
+  subnets = var.subnet_ids
+  security_groups = [aws_security_group.elb.id]
   cross_zone_load_balancing = true
 
   health_check {
@@ -18,9 +18,9 @@ resource "aws_elb" "elb" {
   }
 
   listener {
-    instance_port = "${var.instance_port}"
+    instance_port = var.instance_port
     instance_protocol = "http"
-    lb_port = "${var.lb_port}"
+    lb_port = var.lb_port
     lb_protocol = "http"
   }
 }
@@ -30,9 +30,9 @@ resource "aws_elb" "elb" {
 # ---------------------------------------------------------------------------------------------------------------------
 
 resource "aws_security_group" "elb" {
-  name = "${var.name}"
+  name = var.name
   description = "The security group for the ${var.name} ELB"
-  vpc_id = "${var.vpc_id}"
+  vpc_id = var.vpc_id
 }
 
 resource "aws_security_group_rule" "all_outbound_all" {
@@ -41,15 +41,15 @@ resource "aws_security_group_rule" "all_outbound_all" {
   to_port = 0
   protocol = "-1"
   cidr_blocks = ["0.0.0.0/0"]
-  security_group_id = "${aws_security_group.elb.id}"
+  security_group_id = aws_security_group.elb.id
 }
 
 resource "aws_security_group_rule" "all_inbound_all" {
   type = "ingress"
-  from_port = "${var.lb_port}"
-  to_port = "${var.lb_port}"
+  from_port = var.lb_port
+  to_port = var.lb_port
   protocol = "tcp"
   cidr_blocks = ["0.0.0.0/0"]
-  security_group_id = "${aws_security_group.elb.id}"
+  security_group_id = aws_security_group.elb.id
 }
 

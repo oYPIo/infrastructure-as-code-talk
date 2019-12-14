@@ -50,7 +50,7 @@ variable "elb_name" {
 
 variable "env_vars" {
   description = "The environment variables to make available in each ECS Task. Any time you update this variable, make sure to update var.num_env_vars too!"
-  type = "map"
+  type = map(string)
   default = {}
 }
 

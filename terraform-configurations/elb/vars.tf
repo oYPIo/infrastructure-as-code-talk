@@ -13,7 +13,7 @@ variable "vpc_id" {
 
 variable "subnet_ids" {
   description = "The subnet IDs in which to deploy the ELB."
-  type = "list"
+  type = list(string)
 }
 
 variable "instance_port" {
